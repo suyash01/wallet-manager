@@ -1,0 +1,9 @@
+<div *ngIf="accounts | async; let accounts" class="accounts">
+  <button mat-raised-button color="primary" *ngFor="let account of accounts">
+    <div>
+      <p>{{ account.name }}</p>
+      <p>&#8377;{{ account.balance }}</p>
+    </div>
+  </button>
+  <button mat-stroked-button color="primary" (click)="addAccount()">ADD ACCOUNT<span>+</span></button>
+<div>
