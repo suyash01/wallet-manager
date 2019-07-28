@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService } from "../services/auth.service";
+import { Router } from "@angular/router";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "app-auth",
@@ -19,7 +21,13 @@ export class AuthComponent implements OnInit {
     password: new FormControl("", [Validators.required])
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private afa: AngularFireAuth
+  ) {
+    if (afa.auth.currentUser) router.navigate(["/dashboard"]);
+  }
 
   ngOnInit() {}
 

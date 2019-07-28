@@ -17,11 +17,9 @@ export class AuthService {
     private afAuth: AngularFireAuth,
     private snackbar: MatSnackBar,
     private router: Router
-  ) {
-    if (this.afAuth.auth.currentUser) this.router.navigate(["/dashboard"]);
-  }
+  ) {}
 
-  createUser(credentials: Credentials) {
+  createUser(credentials: Credentials): void {
     this.afAuth.auth
       .createUserWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
@@ -45,7 +43,7 @@ export class AuthService {
       });
   }
 
-  loginUser(credentials: Credentials) {
+  loginUser(credentials: Credentials): void {
     this.afAuth.auth
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
@@ -64,5 +62,13 @@ export class AuthService {
             duration: 2000
           });
       });
+  }
+
+  logoutUser(): void {
+    this.afAuth.auth.signOut();
+    this.router.navigate(["/"]);
+    this.snackbar.open("Logged out successfully", "OK", {
+      duration: 2000
+    });
   }
 }

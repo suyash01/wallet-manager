@@ -1,17 +1,8 @@
-import { Component, OnInit } from "@angular/core";
-import {
-  AngularFirestoreCollection,
-  AngularFirestore
-} from "@angular/fire/firestore";
-import { Observable } from "rxjs";
+import { Component, OnInit, Input } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { AddAccountComponent } from "./add-account/add-account.component";
-import { AngularFireAuth } from "@angular/fire/auth";
-
-export interface Account {
-  name: string;
-  balance: number;
-}
+import { Observable } from "rxjs";
+import { Account } from "../interfaces/account";
 
 @Component({
   selector: "app-accounts",
@@ -19,19 +10,9 @@ export interface Account {
   styleUrls: ["./accounts.component.scss"]
 })
 export class AccountsComponent implements OnInit {
-  private accountsCollection: AngularFirestoreCollection<Account>;
-  accounts: Observable<Account[]>;
+  @Input() accounts: Observable<Account[]>;
 
-  constructor(
-    private afa: AngularFireAuth,
-    private afs: AngularFirestore,
-    private dialog: MatDialog
-  ) {
-    this.accountsCollection = afs.collection<Account>("accounts", ref =>
-      ref.where("user", "==", afa.auth.currentUser.uid)
-    );
-    this.accounts = this.accountsCollection.valueChanges();
-  }
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {}
 
