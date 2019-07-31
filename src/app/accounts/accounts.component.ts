@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { AddAccountComponent } from "./add-account/add-account.component";
 import { Observable } from "rxjs";
@@ -11,10 +11,19 @@ import { Account } from "../interfaces/account";
 })
 export class AccountsComponent implements OnInit {
   @Input() accounts: Observable<Account[]>;
+  @Output() selectedAccount: EventEmitter<string>;
+  accountId: string;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) {
+    this.selectedAccount = new EventEmitter<string>();
+  }
 
   ngOnInit() {}
+
+  selectAccount(id: string): void {
+    this.accountId = id;
+    this.selectedAccount.emit(id);
+  }
 
   addAccount(): void {
     this.dialog.open(AddAccountComponent);

@@ -1,2 +1,5 @@
-<app-accounts [accounts]="accounts"></app-accounts>
-<button mat-fab class="fab">+</button>
+<app-accounts
+  [accounts]="accounts"
+  (selectedAccount)="selectAccount($event)"
+></app-accounts>
+<button mat-fab class="fab" (click)="addTransaction()">+</button>

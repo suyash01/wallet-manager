@@ -15,6 +15,7 @@ import { Account } from "../interfaces/account";
 export class DashboardComponent implements OnInit {
   private accountsCollection: AngularFirestoreCollection<Account>;
   accounts: Observable<Account[]>;
+  selectedAccount: string = null;
 
   constructor(private afs: AngularFirestore, private afa: AngularFireAuth) {
     this.accountsCollection = afs.collection<Account>("accounts", ref =>
@@ -24,4 +25,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  selectAccount(id: string): void {
+    this.selectedAccount = id;
+  }
+
+  addTransaction(): void {
+    console.log(this.selectedAccount);
+  }
 }
