@@ -1,29 +1,29 @@
-<div *ngIf="accounts | async; let accounts" class="accounts">
-  <div *ngFor="let account of accounts">
-    <button
-      mat-stroked-button
-      color="primary"
-      (click)="selectAccount(account.id)"
-      *ngIf="account.id != accountId"
-    >
-      <div>
-        <p>{{ account.name }}</p>
-        <p>&#8377;{{ account.balance }}</p>
-      </div>
-    </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="selectAccount(account.id)"
-      *ngIf="account.id == accountId"
-    >
-      <div>
-        <p>{{ account.name }}</p>
-        <p>&#8377;{{ account.balance }}</p>
-      </div>
-    </button>
-  </div>
-  <button mat-stroked-button color="primary" (click)="addAccount()">
-    ADD ACCOUNT<span>+</span>
+<!-- <div *ngIf="accounts | async; let accounts" class="accounts"> -->
+<div *ngFor="let account of accounts">
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="selectAccount(account.id)"
+    *ngIf="account.id != accountId"
+  >
+    <div>
+      <p>{{ account.name }}</p>
+      <p>&#8377;{{ account.balance }}</p>
+    </div>
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="selectAccount(account.id)"
+    *ngIf="account.id == accountId"
+  >
+    <div>
+      <p>{{ account.name }}</p>
+      <p>&#8377;{{ account.balance }}</p>
+    </div>
   </button>
 </div>
+<button mat-stroked-button color="primary" (click)="addAccount()">
+  ADD ACCOUNT<span>+</span>
+</button>
+<!-- </div> -->

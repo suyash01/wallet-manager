@@ -18,6 +18,8 @@ import { AddAccountComponent } from "./accounts/add-account/add-account.componen
 import { AuthComponent } from "./auth/auth.component";
 import { AuthService } from "./services/auth.service";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { TransactionsComponent } from "./transactions/transactions.component";
+import { AddTransactionComponent } from "./transactions/add-transaction/add-transaction.component";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
     AccountsComponent,
     AddAccountComponent,
     AuthComponent,
-    DashboardComponent
+    DashboardComponent,
+    TransactionsComponent,
+    AddTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
     FlexLayoutModule
   ],
   providers: [AuthService],
-  entryComponents: [AddAccountComponent],
+  entryComponents: [AddAccountComponent, AddTransactionComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

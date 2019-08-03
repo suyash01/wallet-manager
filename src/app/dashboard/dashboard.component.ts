@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material";
+import { AddTransactionComponent } from "../transactions/add-transaction/add-transaction.component";
 import {
   AngularFirestoreCollection,
   AngularFirestore
 } from "@angular/fire/firestore";
-import { Observable } from "rxjs";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Account } from "../interfaces/account";
 
 @Component({
   selector: "app-dashboard",
@@ -13,24 +13,33 @@ import { Account } from "../interfaces/account";
   styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
-  private accountsCollection: AngularFirestoreCollection<Account>;
-  accounts: Observable<Account[]>;
   selectedAccount: string = null;
+  private accountsCollection: AngularFirestoreCollection<Account>;
+  accounts: Account[];
 
-  constructor(private afs: AngularFirestore, private afa: AngularFireAuth) {
-    this.accountsCollection = afs.collection<Account>("accounts", ref =>
-      ref.where("user", "==", afa.auth.currentUser.uid)
+  constructor(
+    private dialog: MatDialog,
+    private afs: AngularFirestore,
+    private afa: AngularFireAuth
+  ) {}
+
+  ngOnInit() {
+    this.accountsCollection = this.afs.collection<Account>("accounts", ref =>
+      ref.where("user", "==", this.afa.auth.currentUser.uid)
     );
-    this.accounts = this.accountsCollection.valueChanges({ idField: "id" });
+    this.accountsCollection.valueChanges({ idField: "id" }).subscribe(data => {
+      this.accounts = data;
+    });
   }
-
-  ngOnInit() {}
 
   selectAccount(id: string): void {
     this.selectedAccount = id;
   }
 
   addTransaction(): void {
-    console.log(this.selectedAccount);
+    this.dialog.open(AddTransactionComponent, {
+      width: "90%",
+      data: { selectedAccount: this.selectedAccount, accounts: this.accounts }
+    });
   }
 }

@@ -1,0 +1,8 @@
+<div *ngIf="transactions | async; let transactions" class="transactions">
+  <mat-card *ngFor="let transaction of transactions">
+    <div>
+      <p>{{ transaction.title }}</p>
+      <p style="float: right">{{ transaction.amount }}</p>
+    </div>
+  </mat-card>
+</div>

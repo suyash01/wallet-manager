@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { AddAccountComponent } from "./add-account/add-account.component";
-import { Observable } from "rxjs";
 import { Account } from "../interfaces/account";
 
 @Component({
@@ -10,7 +9,7 @@ import { Account } from "../interfaces/account";
   styleUrls: ["./accounts.component.scss"]
 })
 export class AccountsComponent implements OnInit {
-  @Input() accounts: Observable<Account[]>;
+  @Input() accounts: Account[];
   @Output() selectedAccount: EventEmitter<string>;
   accountId: string;
 
@@ -26,6 +25,8 @@ export class AccountsComponent implements OnInit {
   }
 
   addAccount(): void {
-    this.dialog.open(AddAccountComponent);
+    this.dialog.open(AddAccountComponent, {
+      width: "90%"
+    });
   }
 }
