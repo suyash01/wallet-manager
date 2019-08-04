@@ -19,6 +19,12 @@
     <input matInput type="number" required formControlName="amount" />
   </mat-form-field>
   <mat-form-field appearance="outline">
+    <mat-label>Date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="date" />
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>Account</mat-label>
     <mat-select required formControlName="account">
       <mat-option

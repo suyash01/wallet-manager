@@ -4,6 +4,7 @@ export interface Transaction {
   description: string;
   amount: number;
   type: "debit" | "credit";
+  date: string;
   account: string;
   user: String;
 }
