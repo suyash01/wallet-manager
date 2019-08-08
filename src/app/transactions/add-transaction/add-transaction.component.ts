@@ -5,6 +5,7 @@ import { AngularFireAuth } from "@angular/fire/auth";
 import { Transaction } from "src/app/interfaces/transaction";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
+import * as moment from "moment";
 
 @Component({
   selector: "app-add-transaction",
@@ -15,8 +16,13 @@ export class AddTransactionComponent implements OnInit {
   transactionForm: FormGroup = new FormGroup({
     title: new FormControl("", [Validators.required]),
     description: new FormControl(),
-    amount: new FormControl("", [Validators.required]),
-    date: new FormControl({ value: "", disabled: true }, [Validators.required]),
+    amount: new FormControl("", [
+      Validators.required,
+      Validators.pattern(/^[1-9]\d*(\.\d{1,2})?|0\.\d{1,2}$/)
+    ]),
+    date: new FormControl({ value: moment(new Date()), disabled: true }, [
+      Validators.required
+    ]),
     type: new FormControl("", [Validators.required]),
     account: new FormControl("", [Validators.required])
   });

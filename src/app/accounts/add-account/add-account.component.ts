@@ -19,7 +19,10 @@ export class AddAccountComponent implements OnInit {
   accountForm: FormGroup = new FormGroup({
     name: new FormControl("", [Validators.required]),
     type: new FormControl("", [Validators.required]),
-    balance: new FormControl("", [Validators.required])
+    balance: new FormControl("", [
+      Validators.required,
+      Validators.pattern(/^([1-9]\d*)|0(\.\d{1,2})?$/)
+    ])
   });
 
   constructor(

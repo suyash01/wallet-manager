@@ -1,7 +1,7 @@
 <mat-tab-group>
   <mat-tab label="Login">
     <mat-card>
-      <form [formGroup]="loginForm">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput required type="email" formControlName="email" />
@@ -10,7 +10,7 @@
           <mat-label>Password</mat-label>
           <input matInput required type="password" formControlName="password" />
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="login()">
+        <button mat-raised-button color="primary" type="submit">
           Login
         </button>
       </form>
@@ -18,7 +18,7 @@
   </mat-tab>
   <mat-tab label="Register">
     <mat-card>
-      <form [formGroup]="registerForm">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
           <input matInput required formControlName="name" />
@@ -31,7 +31,7 @@
           <mat-label>Password</mat-label>
           <input matInput required type="password" formControlName="password" />
         </mat-form-field>
-        <button mat-raised-button color="primary" (click)="register()">
+        <button mat-raised-button color="primary" type="submit">
           Register
         </button>
       </form>

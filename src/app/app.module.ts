@@ -20,6 +20,7 @@ import { AuthService } from "./services/auth.service";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { TransactionsComponent } from "./transactions/transactions.component";
 import { AddTransactionComponent } from "./transactions/add-transaction/add-transaction.component";
+import { StatsComponent } from './stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AddTransactionComponent } from "./transactions/add-transaction/add-tran
     AuthComponent,
     DashboardComponent,
     TransactionsComponent,
-    AddTransactionComponent
+    AddTransactionComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
