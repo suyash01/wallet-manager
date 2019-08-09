@@ -1,11 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { AddTransactionComponent } from "../transactions/add-transaction/add-transaction.component";
-import {
-  AngularFirestoreCollection,
-  AngularFirestore
-} from "@angular/fire/firestore";
-import { AngularFireAuth } from "@angular/fire/auth";
+import { DataService } from "../services/data.service";
+import { Account } from "../interfaces/account";
 
 @Component({
   selector: "app-dashboard",
@@ -14,23 +11,15 @@ import { AngularFireAuth } from "@angular/fire/auth";
 })
 export class DashboardComponent implements OnInit {
   selectedAccount: string = null;
-  private accountsCollection: AngularFirestoreCollection<Account>;
   accounts: Account[];
 
-  constructor(
-    private dialog: MatDialog,
-    private afs: AngularFirestore,
-    private afa: AngularFireAuth
-  ) {}
-
-  ngOnInit() {
-    this.accountsCollection = this.afs.collection<Account>("accounts", ref =>
-      ref.where("user", "==", this.afa.auth.currentUser.uid)
-    );
-    this.accountsCollection.valueChanges({ idField: "id" }).subscribe(data => {
+  constructor(private dialog: MatDialog, private data: DataService) {
+    this.data.getAccounts.subscribe(data => {
       this.accounts = data;
     });
   }
+
+  ngOnInit() {}
 
   selectAccount(id: string): void {
     this.selectedAccount = id;

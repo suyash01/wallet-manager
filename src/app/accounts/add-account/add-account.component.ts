@@ -21,7 +21,7 @@ export class AddAccountComponent implements OnInit {
     type: new FormControl("", [Validators.required]),
     balance: new FormControl("", [
       Validators.required,
-      Validators.pattern(/^([1-9]\d*)|0(\.\d{1,2})?$/)
+      Validators.pattern(/^([1-9]\d{0,9})|0(\.\d{1,2})?$/)
     ])
   });
 

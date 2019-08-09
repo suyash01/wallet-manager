@@ -16,11 +16,10 @@ import { AppMaterialModule } from "./app-material.module";
 import { AccountsComponent } from "./accounts/accounts.component";
 import { AddAccountComponent } from "./accounts/add-account/add-account.component";
 import { AuthComponent } from "./auth/auth.component";
-import { AuthService } from "./services/auth.service";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { TransactionsComponent } from "./transactions/transactions.component";
 import { AddTransactionComponent } from "./transactions/add-transaction/add-transaction.component";
-import { StatsComponent } from './stats/stats.component';
+import { StatsComponent } from "./stats/stats.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +47,7 @@ import { StatsComponent } from './stats/stats.component';
     AngularFireAuthGuardModule,
     FlexLayoutModule
   ],
-  providers: [AuthService],
+  providers: [],
   entryComponents: [AddAccountComponent, AddTransactionComponent],
   bootstrap: [AppComponent]
 })

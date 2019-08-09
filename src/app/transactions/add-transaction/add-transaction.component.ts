@@ -6,6 +6,7 @@ import { Transaction } from "src/app/interfaces/transaction";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { MatSnackBar } from "@angular/material";
 import * as moment from "moment";
+import { Account } from "src/app/interfaces/account";
 
 @Component({
   selector: "app-add-transaction",
@@ -13,16 +14,12 @@ import * as moment from "moment";
   styleUrls: ["./add-transaction.component.scss"]
 })
 export class AddTransactionComponent implements OnInit {
+  account: Account;
   transactionForm: FormGroup = new FormGroup({
     title: new FormControl("", [Validators.required]),
     description: new FormControl(),
-    amount: new FormControl("", [
-      Validators.required,
-      Validators.pattern(/^[1-9]\d*(\.\d{1,2})?|0\.\d{1,2}$/)
-    ]),
-    date: new FormControl({ value: moment(new Date()), disabled: true }, [
-      Validators.required
-    ]),
+    amount: new FormControl("", [Validators.required, Validators.pattern(/^[1-9]\d{0,9}(\.\d{1,2})?|0\.\d{1,2}$/)]),
+    date: new FormControl({ value: moment(new Date()), disabled: true }, [Validators.required]),
     type: new FormControl("", [Validators.required]),
     account: new FormControl("", [Validators.required])
   });
@@ -35,10 +32,22 @@ export class AddTransactionComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.data["selectedAccount"]) {
+      this.transactionForm.controls["account"].setValue(this.data["selectedAccount"]);
+      this.account = this.data["accounts"].find(
+        (account: Account) => account.id === this.transactionForm.value.account
+      );
+    }
+  }
 
   addTransaction(): void {
-    if (!this.transactionForm.valid) {
+    this.account = this.data["accounts"].find((account: Account) => account.id === this.transactionForm.value.account);
+    const newBalance: number =
+      this.transactionForm.value.type === "debit"
+        ? this.account.balance - Number(this.transactionForm.value.amount)
+        : this.account.balance + Number(this.transactionForm.value.amount);
+    if (!this.transactionForm.valid || newBalance < 0) {
       this.snackbar.open("Incorrect details", "OK", { duration: 2000 });
       return;
     }
@@ -46,6 +55,9 @@ export class AddTransactionComponent implements OnInit {
       ...this.transactionForm.value,
       user: this.afa.auth.currentUser.uid
     });
+    this.afs
+      .doc<Account>("accounts/" + this.transactionForm.value.account)
+      .update({ balance: Number(newBalance.toFixed(2)) });
     this.dialogRef.close();
   }
 

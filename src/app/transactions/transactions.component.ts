@@ -1,12 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from "@angular/fire/firestore";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { Transaction } from "../interfaces/transaction";
-import { Observable } from "rxjs";
-import { Account } from "../interfaces/account";
+import { DataService } from "../services/data.service";
 
 @Component({
   selector: "app-transactions",
@@ -15,16 +9,11 @@ import { Account } from "../interfaces/account";
 })
 export class TransactionsComponent implements OnInit {
   @Input() selectedAccount: string;
-  private transactionsCollection: AngularFirestoreCollection<Transaction>;
-  transactions: Observable<Transaction[]>;
+  transactions: Transaction[];
 
-  constructor(private afs: AngularFirestore, private afa: AngularFireAuth) {
-    this.transactionsCollection = afs.collection<Transaction>(
-      "transactions",
-      ref => ref.where("user", "==", afa.auth.currentUser.uid)
-    );
-    this.transactions = this.transactionsCollection.valueChanges({
-      idField: "id"
+  constructor(private data: DataService) {
+    this.data.getTransactions.subscribe(data => {
+      this.transactions = data;
     });
   }
 

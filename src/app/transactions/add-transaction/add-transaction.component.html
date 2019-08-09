@@ -8,6 +8,12 @@
     <input matInput formControlName="description" />
   </mat-form-field>
   <mat-form-field appearance="outline">
+    <mat-label>Account</mat-label>
+    <mat-select required formControlName="account">
+      <mat-option *ngFor="let account of data.accounts" value="{{ account.id }}">{{ account.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>Type</mat-label>
     <mat-select required formControlName="type">
       <mat-option value="debit">Debit</mat-option>
@@ -17,22 +23,13 @@
   <mat-form-field appearance="outline">
     <mat-label>Amount</mat-label>
     <input matInput required formControlName="amount" />
+    <mat-hint *ngIf="account">balance = {{ account.balance }}</mat-hint>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label>Date</mat-label>
     <input matInput [matDatepicker]="picker" formControlName="date" />
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker touchUi #picker disabled="false"></mat-datepicker>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Account</mat-label>
-    <mat-select required formControlName="account">
-      <mat-option
-        *ngFor="let account of data.accounts"
-        value="{{ account.id }}"
-        >{{ account.name }}</mat-option
-      >
-    </mat-select>
   </mat-form-field>
 </form>
 <button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
