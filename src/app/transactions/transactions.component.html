@@ -1,6 +1,15 @@
-<mat-card *ngFor="let transaction of transactions">
-  <div>
-    <p>{{ transaction.title }}</p>
-    <p style="float: right">&#8377;{{ transaction.amount }}</p>
-  </div>
-</mat-card>
+<mat-list>
+  <mat-list-item *ngFor="let transaction of transactions">
+    <p matLine>
+      <span>{{ transaction.title }}</span>
+      <span style="float: right" [style.color]="transaction.type === 'debit' ? '#F44336' : '#4CAF50'">
+        &#8377;{{ transaction.amount }}
+      </span>
+    </p>
+    <p matLine style="font-size: .7rem">
+      <span>{{ transaction.account }}</span>
+      <span style="float: right">{{ transaction.date }}</span>
+    </p>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+</mat-list>

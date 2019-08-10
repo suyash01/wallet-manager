@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from "@angular/core";
+import { Component, OnInit, Inject, ɵConsole } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { AngularFirestore } from "@angular/fire/firestore";
 import { AngularFireAuth } from "@angular/fire/auth";
@@ -19,7 +19,7 @@ export class AddTransactionComponent implements OnInit {
     title: new FormControl("", [Validators.required]),
     description: new FormControl(),
     amount: new FormControl("", [Validators.required, Validators.pattern(/^[1-9]\d{0,9}(\.\d{1,2})?|0\.\d{1,2}$/)]),
-    date: new FormControl({ value: moment(new Date()), disabled: true }, [Validators.required]),
+    date: new FormControl(moment(new Date()).toISOString(true), [Validators.required]),
     type: new FormControl("", [Validators.required]),
     account: new FormControl("", [Validators.required])
   });
@@ -51,6 +51,7 @@ export class AddTransactionComponent implements OnInit {
       this.snackbar.open("Incorrect details", "OK", { duration: 2000 });
       return;
     }
+    console.log(this.transactionForm.value);
     this.afs.collection<Transaction>("transactions").add({
       ...this.transactionForm.value,
       user: this.afa.auth.currentUser.uid
