@@ -3,7 +3,7 @@
     <p matLine>
       <span>{{ transaction.title }}</span>
       <span style="float: right" [style.color]="transaction.type === 'debit' ? '#F44336' : '#4CAF50'">
-        &#8377;{{ transaction.amount }}
+        <span *ngIf="transaction.type === 'debit'">-</span>&#8377;{{ transaction.amount }}
       </span>
     </p>
     <p matLine style="font-size: .7rem">

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { combineLatest } from "rxjs";
 import * as moment from "moment";
 import { Transaction } from "../interfaces/transaction";
 import { DataService } from "../services/data.service";
@@ -16,12 +15,15 @@ export class TransactionsComponent implements OnInit {
   accounts: Account[];
 
   constructor(private data: DataService) {
-    combineLatest(this.data.getAccounts, this.data.getTransactions).subscribe(([accountsData, transactionData]) => {
-      this.accounts = accountsData;
-      this.transactions = transactionData;
+    this.data.getAccounts.subscribe(data => {
+      this.accounts = data;
+    });
+    this.data.getTransactions.subscribe(data => {
+      this.transactions = data;
       this.transactions.forEach(transaction => {
+        const account: Account = this.accounts.find(account => account.id === transaction.account);
         transaction.date = moment(transaction.date).format("MM/DD/YYYY");
-        transaction.account = this.accounts.find(account => account.id === transaction.account).name;
+        transaction.account = account ? account.name : "NA";
       });
     });
   }

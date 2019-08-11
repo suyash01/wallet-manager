@@ -51,7 +51,7 @@ export class AddTransactionComponent implements OnInit {
       this.snackbar.open("Incorrect details", "OK", { duration: 2000 });
       return;
     }
-    console.log(this.transactionForm.value);
+    this.transactionForm.value.amount = Number(this.transactionForm.value.amount);
     this.afs.collection<Transaction>("transactions").add({
       ...this.transactionForm.value,
       user: this.afa.auth.currentUser.uid
