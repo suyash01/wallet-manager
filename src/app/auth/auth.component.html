@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedTab">
   <mat-tab label="Login">
     <mat-card>
       <form [formGroup]="loginForm" (ngSubmit)="login()">
@@ -18,7 +18,7 @@
   </mat-tab>
   <mat-tab label="Register">
     <mat-card>
-      <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <form [formGroup]="registerForm" (ngSubmit)="register($event)">
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
           <input matInput required formControlName="name" />

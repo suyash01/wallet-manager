@@ -13,11 +13,7 @@ interface Credentials {
   providedIn: "root"
 })
 export class AuthService {
-  constructor(
-    private afAuth: AngularFireAuth,
-    private snackbar: MatSnackBar,
-    private router: Router
-  ) {}
+  constructor(private afAuth: AngularFireAuth, private snackbar: MatSnackBar, private router: Router) {}
 
   createUser(credentials: Credentials): void {
     this.afAuth.auth
@@ -29,7 +25,17 @@ export class AuthService {
         this.snackbar.open("Registered Successfully :)", "OK", {
           duration: 2000
         });
-        this.router.navigate(["/dashboard"]);
+        this.afAuth.auth.currentUser
+          .sendEmailVerification()
+          .then(() => {
+            this.snackbar.open("Verify email...", "OK", {
+              duration: 2000
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+        this.afAuth.auth.signOut();
       })
       .catch(err => {
         if (err["code"] === "auth/weak-password")
@@ -47,17 +53,21 @@ export class AuthService {
     this.afAuth.auth
       .signInWithEmailAndPassword(credentials.email, credentials.password)
       .then(() => {
-        this.snackbar.open("Logged In...", "OK", {
-          duration: 2000
-        });
-        this.router.navigate(["/dashboard"]);
+        if (this.afAuth.auth.currentUser.emailVerified) {
+          this.snackbar.open("Logged In...", "OK", {
+            duration: 2000
+          });
+          this.router.navigate(["/dashboard"]);
+        } else {
+          this.afAuth.auth.signOut();
+          this.snackbar.open("Email not verified...", "OK", {
+            duration: 2000
+          });
+        }
       })
       .catch(err => {
         console.log(err);
-        if (
-          err["code"] === "auth/wrong-password" ||
-          err["code"] === "auth/user-not-found"
-        )
+        if (err["code"] === "auth/wrong-password" || err["code"] === "auth/user-not-found")
           this.snackbar.open("Invalid Credentials...", "OK", {
             duration: 2000
           });
