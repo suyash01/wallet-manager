@@ -1,7 +1,7 @@
 <mat-tab-group mat-stretch-tabs [(selectedIndex)]="selectedTab">
   <mat-tab label="Login">
     <mat-card>
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <form [formGroup]="loginForm" (ngSubmit)="login($event)">
         <mat-form-field appearance="outline">
           <mat-label>Email</mat-label>
           <input matInput required type="email" formControlName="email" />
@@ -10,10 +10,9 @@
           <mat-label>Password</mat-label>
           <input matInput required type="password" formControlName="password" />
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">
-          Login
-        </button>
+        <button mat-raised-button color="primary" type="submit">Login</button>
       </form>
+      <button mat-raised-button color="warn" (click)="googleLogin()">Login with Google</button>
     </mat-card>
   </mat-tab>
   <mat-tab label="Register">
@@ -31,9 +30,7 @@
           <mat-label>Password</mat-label>
           <input matInput required type="password" formControlName="password" />
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">
-          Register
-        </button>
+        <button mat-raised-button color="primary" type="submit">Register</button>
       </form>
     </mat-card>
   </mat-tab>

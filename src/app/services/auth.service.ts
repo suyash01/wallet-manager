@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { MatSnackBar } from "@angular/material";
 import { Router } from "@angular/router";
+import { auth } from "firebase/app";
 
 interface Credentials {
   name?: string;
@@ -22,19 +23,11 @@ export class AuthService {
         this.afAuth.auth.currentUser.updateProfile({
           displayName: credentials.name
         });
-        this.snackbar.open("Registered Successfully :)", "OK", {
-          duration: 2000
-        });
-        this.afAuth.auth.currentUser
-          .sendEmailVerification()
-          .then(() => {
-            this.snackbar.open("Verify email...", "OK", {
-              duration: 2000
-            });
-          })
-          .catch(err => {
-            console.log(err);
+        this.afAuth.auth.currentUser.sendEmailVerification().then(() => {
+          this.snackbar.open("Verify email...", "OK", {
+            duration: 2000
           });
+        });
         this.afAuth.auth.signOut();
       })
       .catch(err => {
@@ -66,7 +59,6 @@ export class AuthService {
         }
       })
       .catch(err => {
-        console.log(err);
         if (err["code"] === "auth/wrong-password" || err["code"] === "auth/user-not-found")
           this.snackbar.open("Invalid Credentials...", "OK", {
             duration: 2000
@@ -74,11 +66,24 @@ export class AuthService {
       });
   }
 
+  googleLogin(): void {
+    const provider = new auth.GoogleAuthProvider();
+    this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(result => {
+        this.router.navigate(["dashboard"]);
+      })
+      .catch(err => {
+        this.snackbar.open("Login failed...", "OK", { duration: 2000 });
+      });
+  }
+
   logoutUser(): void {
-    this.afAuth.auth.signOut();
-    this.router.navigate(["/"]);
-    this.snackbar.open("Logged out successfully", "OK", {
-      duration: 2000
+    this.afAuth.auth.signOut().then(() => {
+      this.snackbar.open("Logged out successfully", "OK", {
+        duration: 2000
+      });
     });
+    this.router.navigate(["/"]);
   }
 }

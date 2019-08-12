@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AuthService } from "../services/auth.service";
 import { Router } from "@angular/router";
@@ -29,14 +29,20 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {}
 
-  login(): void {
+  login(event: any): void {
     this.authService.loginUser(this.loginForm.value);
+    event.currentTarget.reset();
+    this.loginForm.reset();
   }
 
-  register(event): void {
+  register(event: any): void {
     this.authService.createUser(this.registerForm.value);
     event.currentTarget.reset();
     this.registerForm.reset();
     this.selectedTab = 0;
+  }
+
+  googleLogin(): void {
+    this.authService.googleLogin();
   }
 }
