@@ -2,8 +2,11 @@
   <mat-toolbar-row>
     <span>WM</span>
     <span class="spacer"></span>
+    <button mat-button *ngIf="afa.auth.currentUser" (click)="openProfile()">
+      <mat-icon>person</mat-icon>
+    </button>
     <button mat-button *ngIf="afa.auth.currentUser" (click)="logoutUser()">
-      <mat-icon>power_settings_new</mat-icon> Logout
+      <mat-icon>power_settings_new</mat-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

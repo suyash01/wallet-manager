@@ -20,6 +20,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { TransactionsComponent } from "./transactions/transactions.component";
 import { AddTransactionComponent } from "./transactions/add-transaction/add-transaction.component";
 import { StatsComponent } from "./stats/stats.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StatsComponent } from "./stats/stats.component";
     DashboardComponent,
     TransactionsComponent,
     AddTransactionComponent,
-    StatsComponent
+    StatsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,7 @@ import { StatsComponent } from "./stats/stats.component";
     FlexLayoutModule
   ],
   providers: [],
-  entryComponents: [AddAccountComponent, AddTransactionComponent],
+  entryComponents: [AddAccountComponent, AddTransactionComponent, ProfileComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
