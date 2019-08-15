@@ -1,27 +1,16 @@
+<mat-spinner [diameter]="40" *ngIf="!accounts"></mat-spinner>
 <div *ngFor="let account of accounts">
-  <button
-    mat-stroked-button
-    color="primary"
-    (click)="selectAccount(account.id)"
-    *ngIf="account.id != accountId"
-  >
+  <button mat-stroked-button color="primary" (click)="selectAccount(account.id)" *ngIf="account.id != accountId">
     <div>
       <p>{{ account.name }}</p>
       <p>&#8377;{{ account.balance }}</p>
     </div>
   </button>
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="selectAccount(account.id)"
-    *ngIf="account.id == accountId"
-  >
+  <button mat-raised-button color="primary" (click)="selectAccount(account.id)" *ngIf="account.id == accountId">
     <div>
       <p>{{ account.name }}</p>
       <p>&#8377;{{ account.balance }}</p>
     </div>
   </button>
 </div>
-<button mat-stroked-button color="primary" (click)="addAccount()">
-  ADD ACCOUNT<span>+</span>
-</button>
+<button mat-stroked-button color="primary" (click)="addAccount()">ADD ACCOUNT<span>+</span></button>

@@ -5,3 +5,12 @@ p {
 mat-list-item {
   height: 60px !important;
 }
+
+#spinner {
+  text-align: center;
+  padding: 10px;
+
+  mat-spinner {
+    display: inline-block;
+  }
+}

@@ -13,6 +13,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { MatListModule } from "@angular/material/list";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @NgModule({
   exports: [
@@ -29,7 +30,8 @@ import { MatDividerModule } from "@angular/material/divider";
     MatDatepickerModule,
     MatMomentDateModule,
     MatListModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule
   ]
 })
 export class AppMaterialModule {}
