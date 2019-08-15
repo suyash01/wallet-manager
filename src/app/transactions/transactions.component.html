@@ -1,3 +1,6 @@
+<div *ngIf="!transactions" id="spinner">
+  <mat-spinner [diameter]="40"></mat-spinner>
+</div>
 <mat-list>
   <mat-list-item *ngFor="let transaction of transactions">
     <p matLine>
