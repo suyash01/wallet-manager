@@ -11,7 +11,7 @@ import { Account } from "../interfaces/account";
 })
 export class TransactionsComponent implements OnInit {
   private selectedAccount: string;
-  private transactions: Transaction[];
+  transactions: Transaction[];
   filteredTransaction: Transaction[];
   accounts: Account[];
 
@@ -21,24 +21,29 @@ export class TransactionsComponent implements OnInit {
     });
     this.data.getTransactions.subscribe(data => {
       this.transactions = data;
-      this.transactions.forEach(transaction => {
-        const account: Account = this.accounts.find(account => account.id === transaction.account);
-        transaction.date = moment(transaction.date).format("MM/DD/YYYY");
-        transaction.accountName = account ? account.name : "NA";
-      });
-      this.filterTransactions();
+      this.processTransactions();
     });
     this.data.getSelectedAccount.subscribe(data => {
       this.selectedAccount = data;
-      this.filterTransactions();
+      this.processTransactions();
     });
   }
 
   ngOnInit() {}
 
-  private filterTransactions(): void {
+  private processTransactions(): void {
     if (this.selectedAccount)
       this.filteredTransaction = this.transactions.filter(transaction => transaction.account === this.selectedAccount);
-    else this.filteredTransaction = this.transactions;
+    else this.filteredTransaction = this.transactions.filter(transaction => true);
+    this.filteredTransaction.sort((a, b) => {
+      if (a.date > b.date) return 1;
+      if (b.date > a.date) return -1;
+      return 0;
+    });
+    this.filteredTransaction.forEach(transaction => {
+      const account: Account = this.accounts.find(account => account.id === transaction.account);
+      transaction.date = moment(transaction.date).format("MM/DD/YYYY");
+      transaction.accountName = account ? account.name : "NA";
+    });
   }
 }

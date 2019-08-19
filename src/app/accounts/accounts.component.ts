@@ -18,8 +18,13 @@ export class AccountsComponent implements OnInit {
   ngOnInit() {}
 
   selectAccount(id: string): void {
-    this.accountId = id;
-    this.data.setSelectedAccount = id;
+    if (id === this.accountId) {
+      this.accountId = null;
+      this.data.setSelectedAccount = null;
+    } else {
+      this.accountId = id;
+      this.data.setSelectedAccount = id;
+    }
   }
 
   addAccount(): void {
