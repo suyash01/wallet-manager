@@ -10,8 +10,9 @@ import { Account } from "../interfaces/account";
   styleUrls: ["./transactions.component.scss"]
 })
 export class TransactionsComponent implements OnInit {
-  @Input() selectedAccount: string;
-  transactions: Transaction[];
+  private selectedAccount: string;
+  private transactions: Transaction[];
+  filteredTransaction: Transaction[];
   accounts: Account[];
 
   constructor(private data: DataService) {
@@ -23,10 +24,21 @@ export class TransactionsComponent implements OnInit {
       this.transactions.forEach(transaction => {
         const account: Account = this.accounts.find(account => account.id === transaction.account);
         transaction.date = moment(transaction.date).format("MM/DD/YYYY");
-        transaction.account = account ? account.name : "NA";
+        transaction.accountName = account ? account.name : "NA";
       });
+      this.filterTransactions();
+    });
+    this.data.getSelectedAccount.subscribe(data => {
+      this.selectedAccount = data;
+      this.filterTransactions();
     });
   }
 
   ngOnInit() {}
+
+  private filterTransactions(): void {
+    if (this.selectedAccount)
+      this.filteredTransaction = this.transactions.filter(transaction => transaction.account === this.selectedAccount);
+    else this.filteredTransaction = this.transactions;
+  }
 }

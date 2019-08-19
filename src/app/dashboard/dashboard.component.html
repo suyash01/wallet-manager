@@ -1,10 +1,7 @@
-<app-accounts
-  [accounts]="accounts"
-  (selectedAccount)="selectAccount($event)"
-></app-accounts>
+<app-accounts [accounts]="accounts"></app-accounts>
 <mat-tab-group mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
   <mat-tab label="Transactions">
-    <app-transactions [selectedAccount]="selectedAccount"></app-transactions>
+    <app-transactions></app-transactions>
   </mat-tab>
   <mat-tab label="Statistics">
     <app-stats></app-stats>

@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/fire
 import { Account } from "../interfaces/account";
 import { Transaction } from "../interfaces/transaction";
 import { AngularFireAuth } from "@angular/fire/auth";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
@@ -13,6 +13,7 @@ export class DataService {
   private transactionsCollection: AngularFirestoreCollection<Transaction>;
   private accounts: Observable<Account[]>;
   private transactions: Observable<Transaction[]>;
+  private selectedAccount: Subject<string>;
 
   constructor(private afs: AngularFirestore, private afa: AngularFireAuth) {
     this.accountsCollection = this.afs.collection<Account>("accounts", ref =>
@@ -25,13 +26,22 @@ export class DataService {
     this.transactions = this.transactionsCollection.valueChanges({
       idField: "id"
     });
+    this.selectedAccount = new Subject<string>();
   }
 
-  get getAccounts() {
+  set setSelectedAccount(id: string) {
+    this.selectedAccount.next(id);
+  }
+
+  get getAccounts(): Observable<Account[]> {
     return this.accounts;
   }
 
-  get getTransactions() {
+  get getTransactions(): Observable<Transaction[]> {
     return this.transactions;
+  }
+
+  get getSelectedAccount(): Observable<string> {
+    return this.selectedAccount;
   }
 }

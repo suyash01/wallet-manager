@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { AddAccountComponent } from "./add-account/add-account.component";
 import { Account } from "../interfaces/account";
+import { DataService } from "../services/data.service";
 
 @Component({
   selector: "app-accounts",
@@ -10,18 +11,15 @@ import { Account } from "../interfaces/account";
 })
 export class AccountsComponent implements OnInit {
   @Input() accounts: Account[];
-  @Output() selectedAccount: EventEmitter<string>;
   accountId: string;
 
-  constructor(private dialog: MatDialog) {
-    this.selectedAccount = new EventEmitter<string>();
-  }
+  constructor(private dialog: MatDialog, private data: DataService) {}
 
   ngOnInit() {}
 
   selectAccount(id: string): void {
     this.accountId = id;
-    this.selectedAccount.emit(id);
+    this.data.setSelectedAccount = id;
   }
 
   addAccount(): void {

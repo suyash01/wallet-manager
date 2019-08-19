@@ -2,7 +2,7 @@
   <mat-spinner [diameter]="40"></mat-spinner>
 </div>
 <mat-list>
-  <mat-list-item *ngFor="let transaction of transactions">
+  <mat-list-item *ngFor="let transaction of filteredTransaction">
     <p matLine>
       <span>{{ transaction.title }}</span>
       <span style="float: right" [style.color]="transaction.type === 'debit' ? '#F44336' : '#4CAF50'">
@@ -10,7 +10,7 @@
       </span>
     </p>
     <p matLine style="font-size: .7rem">
-      <span>{{ transaction.account }}</span>
+      <span>{{ transaction.accountName }}</span>
       <span style="float: right">{{ transaction.date }}</span>
     </p>
     <mat-divider></mat-divider>

@@ -7,4 +7,5 @@ export interface Transaction {
   date: string;
   account: string;
   user: String;
+  accountName?: string;
 }

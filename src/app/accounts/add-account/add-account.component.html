@@ -1,4 +1,4 @@
-<form [formGroup]="accountForm">
+<form [formGroup]="accountForm" (ngSubmit)="addAccount()">
   <mat-form-field appearance="outline">
     <mat-label>Name</mat-label>
     <input matInput required formControlName="name" />
@@ -6,10 +6,7 @@
   <mat-form-field appearance="outline">
     <mat-label>Account Type</mat-label>
     <mat-select required formControlName="type">
-      <mat-option
-        *ngFor="let accountType of accountTypes"
-        [value]="accountType[1]"
-      >
+      <mat-option *ngFor="let accountType of accountTypes" [value]="accountType[1]">
         {{ accountType[0] }}
       </mat-option>
     </mat-select>
@@ -18,6 +15,6 @@
     <mat-label>Initial Balance</mat-label>
     <input matInput required formControlName="balance" />
   </mat-form-field>
+  <button mat-raised-button color="warn" (click)="closeDialog()" type="button">Cancel</button>
+  <button mat-raised-button color="primary" type="submit">Add</button>
 </form>
-<button mat-raised-button color="warn" (click)="closeDialog()">Cancel</button>
-<button mat-raised-button color="primary" (click)="addAccount()">Add</button>

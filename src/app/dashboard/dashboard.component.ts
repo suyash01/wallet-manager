@@ -10,20 +10,19 @@ import { Account } from "../interfaces/account";
   styleUrls: ["./dashboard.component.scss"]
 })
 export class DashboardComponent implements OnInit {
-  selectedAccount: string = null;
+  selectedAccount: string;
   accounts: Account[];
 
   constructor(private dialog: MatDialog, private data: DataService) {
     this.data.getAccounts.subscribe(data => {
       this.accounts = data;
     });
+    this.data.getSelectedAccount.subscribe(data => {
+      this.selectedAccount = data;
+    });
   }
 
   ngOnInit() {}
-
-  selectAccount(id: string): void {
-    this.selectedAccount = id;
-  }
 
   addTransaction(): void {
     this.dialog.open(AddTransactionComponent, {
